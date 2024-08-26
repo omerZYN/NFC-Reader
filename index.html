@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ÖMER, NFC Reader/Writer</title>
+  <title>NFC Reader/Writer</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Quicksand', sans-serif;
       background-color: #f3f4f6;
       color: #333;
       display: flex;
@@ -57,18 +59,20 @@
     }
     #log {
       margin-top: 20px;
-      font-family: monospace;
+      font-family: 'Quicksand', sans-serif;
       white-space: pre-wrap;
       background-color: #e2e8f0;
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #cbd5e0;
+      font-size: 18px;
+      color: #2d3748;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Ömer Safa Aksu</h1>
+    <h1>NFC Reader/Writer</h1>
 
     <label for="nfcInput">Enter text to write to NFC Tag:</label>
     <input type="text" id="nfcInput" placeholder="Enter text here">
@@ -103,6 +107,12 @@
         ndef.addEventListener("reading", ({ message, serialNumber }) => {
           log(`> Serial Number: ${serialNumber}`);
           log(`> Records: (${message.records.length})`);
+
+          for (const record of message.records) {
+            const textDecoder = new TextDecoder(record.encoding);
+            const text = textDecoder.decode(record.data);
+            log(`> Message: ${text}`);
+          }
         });
       } catch (error) {
         log("Argh! " + error);
