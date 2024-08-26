@@ -135,44 +135,18 @@
       log("User clicked scan button");
 
       try {
-        const ndef = new NDEFReader();
-        await ndef.scan();
-        log("> Scan started");
+        // Simulate scanning process
+        log("> Simulating NFC Scan...");
+        
+        // Simulate the result: 63 blocks available
+        const blockCount = 63;
 
-        ndef.addEventListener("readingerror", () => {
-          log("Argh! Cannot read data from the NFC tag. Try another one?");
-        });
+        // Display the block select and input fields
+        document.getElementById("blockSelectContainer").style.display = 'flex';
+        document.getElementById("blockInputContainer").style.display = 'flex';
 
-        ndef.addEventListener("reading", ({ message, serialNumber }) => {
-          log(`> Serial Number: ${serialNumber}`);
-          log(`> Records: (${message.records.length})`);
-
-          for (const record of message.records) {
-            log(`\n--- Record ---`);
-            log(`Record type: ${record.recordType}`);
-            log(`Media type: ${record.mediaType || "N/A"}`);
-            log(`ID: ${record.id || "N/A"}`);
-
-            if (record.recordType === "text") {
-              const textDecoder = new TextDecoder(record.encoding);
-              const text = textDecoder.decode(record.data);
-              log(`Text: ${text}`);
-            } else if (record.recordType === "url") {
-              const textDecoder = new TextDecoder();
-              const url = textDecoder.decode(record.data);
-              log(`URL: ${url}`);
-            } else {
-              log(`Data: ${record.data ? new TextDecoder().decode(record.data) : "No data"}`);
-            }
-          }
-
-          // Display the block select and input fields
-          document.getElementById("blockSelectContainer").style.display = 'flex';
-          document.getElementById("blockInputContainer").style.display = 'flex';
-
-          // Assuming there are 63 blocks, populate the select dropdown
-          populateBlockSelect(63);
-        });
+        // Populate the select dropdown with 63 blocks
+        populateBlockSelect(blockCount);
       } catch (error) {
         log("Argh! " + error);
       }
@@ -191,9 +165,8 @@
       }
       
       try {
-        const ndef = new NDEFReader();
-        await ndef.write(nfcInputValue);
-        log(`> Message "${nfcInputValue}" written to NFC tag`);
+        // Simulate writing process
+        log(`> Simulating writing "${nfcInputValue}" to NFC tag`);
       } catch (error) {
         log("Argh! " + error);
       }
@@ -212,10 +185,8 @@
       }
 
       try {
-        // Here you would use a specific API or method to write to the selected block
-        // Example: await someAPICallToWriteBlock(selectedBlock, blockInputValue);
-
-        log(`> Data "${blockInputValue}" written to Block ${selectedBlock}`);
+        // Simulate writing to the selected block
+        log(`> Simulating writing "${blockInputValue}" to Block ${selectedBlock}`);
       } catch (error) {
         log("Argh! " + error);
       }
@@ -226,9 +197,8 @@
       log("User clicked make read-only button");
 
       try {
-        const ndef = new NDEFReader();
-        await ndef.makeReadOnly();
-        log("> NFC tag has been made permanently read-only");
+        // Simulate making the NFC tag read-only
+        log("> Simulating making NFC tag permanently read-only");
       } catch (error) {
         log("Argh! " + error);
       }
