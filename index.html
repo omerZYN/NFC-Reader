@@ -71,13 +71,17 @@
       border: 1px solid #cbd5e0;
       font-size: 18px;
       color: #2d3748;
-      max-height: 200px;
+      max-height: 200px; /* Adjust the height as needed */
       overflow-y: auto;
     }
     #blockSelectContainer, #blockInputContainer {
       display: none;
       flex-direction: column;
       margin-top: 10px;
+    }
+    #blockSelectContainer {
+      max-height: 150px; /* Adjust as needed */
+      overflow-y: auto;
     }
   </style>
 </head>
@@ -95,7 +99,7 @@
 
     <div id="blockSelectContainer">
       <label for="blockSelect">Select Block:</label>
-      <select id="blockSelect"></select>
+      <select id="blockSelect" size="10"></select> <!-- 'size' attribute shows multiple options with a scrollbar -->
     </div>
 
     <div id="blockInputContainer">
