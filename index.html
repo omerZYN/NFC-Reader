@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NFC Kart Okuma</title>
-  <style>
-    #cardData {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-top: 20px;
-      white-space: pre-wrap;
-      font-family: monospace;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Kart Okuma</title>
+    <style>
+        #cardData {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
 </head>
-
 <body>
-  <h1>NFC Kart Okuma</h1>
-  <button id="readCardBtn">Kartı Okut</button>
-  <div id="cardData"></div>
+    <h1>NFC Kart Okuma</h1>
+    <button id="readCardBtn">Kartı Okut</button>
+    <div id="cardData"></div>
 
-  <script>
-    document.getElementById('readCardBtn').addEventListener('click', function () {
-      // Android uygulamasına istek gönderilir
-      fetch('sunmi://readCard')
-        .then(response => response.json())
-        .then(data => {
-          // JSON verisini göster
-          const cardDataDiv = document.getElementById('cardData');
-          cardDataDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-        })
-        .catch(error => {
-          const cardDataDiv = document.getElementById('cardData');
-          cardDataDiv.innerHTML = "Veri alınamadı. Lütfen tekrar deneyin.";
-          console.error('Hata:', error);
+    <script>
+        // "Kartı Okut" butonuna basıldığında Android uygulamasına bir istek gönderilir.
+        document.getElementById('readCardBtn').addEventListener('click', function() {
+            // Android uygulamasına özel bir URI şeması kullanarak istek gönderiliyor.
+            fetch('sunmi://readCard')
+                .then(response => response.json())
+                .then(data => {
+                    // JSON verisini işleme ve sayfada gösterme
+                    const cardDataDiv = document.getElementById('cardData');
+                    cardDataDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                })
+                .catch(error => {
+                    // Hata durumunda kullanıcıya mesaj göster
+                    const cardDataDiv = document.getElementById('cardData');
+                    cardDataDiv.innerHTML = "Veri alınamadı. Lütfen tekrar deneyin.";
+                    console.error('Hata:', error);
+                });
         });
-    });
-  </script>
-</body>
 
+        // JSON verisini sayfada gösteren fonksiyon
+        function displayCardData(jsonData) {
+            const cardDataDiv = document.getElementById('cardData');
+            const data = JSON.parse(jsonData);
+            cardDataDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
 </html>
