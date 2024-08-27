@@ -1,50 +1,23 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFC Kart Okuma</title>
-    <style>
-        #cardData {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-top: 20px;
-            white-space: pre-wrap;
-            font-family: monospace;
-        }
-    </style>
 </head>
 <body>
-    <h1>NFC Kart Okuma</h1>
-    <button id="readCardBtn">Kartı Okut</button>
-    <div id="cardData"></div>
+    <button id="readCardButton">Kart Oku</button>
+    <pre id="cardData"></pre>
 
     <script>
-        // "Kartı Okut" butonuna basıldığında Android uygulamasına bir istek gönderilir.
-        document.getElementById('readCardBtn').addEventListener('click', function() {
-            // Android uygulamasına özel bir URI şeması kullanarak istek gönderiliyor.
-            fetch('sunmi://readCard')
+        document.getElementById('readCardButton').addEventListener('click', function() {
+            fetch('/read-card')
                 .then(response => response.json())
                 .then(data => {
-                    // JSON verisini işleme ve sayfada gösterme
-                    const cardDataDiv = document.getElementById('cardData');
-                    cardDataDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    document.getElementById('cardData').innerText = JSON.stringify(data, null, 2);
                 })
-                .catch(error => {
-                    // Hata durumunda kullanıcıya mesaj göster
-                    const cardDataDiv = document.getElementById('cardData');
-                    cardDataDiv.innerHTML = "Veri alınamadı. Lütfen tekrar deneyin.";
-                    console.error('Hata:', error);
-                });
+                .catch(error => console.error('Error:', error));
         });
-
-        // JSON verisini sayfada gösteren fonksiyon
-        function displayCardData(jsonData) {
-            const cardDataDiv = document.getElementById('cardData');
-            const data = JSON.parse(jsonData);
-            cardDataDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-        }
     </script>
 </body>
 </html>
