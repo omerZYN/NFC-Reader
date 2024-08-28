@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFC Kart Okuma</title>
+    <title>NFC Web Integration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #nfc-data {
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px dashed #555;
+            background-color: #fff;
+        }
+    </style>
 </head>
+
 <body>
-    <button id="readCardButton">Kart Oku</button>
-    <pre id="cardData"></pre>
+    <h1>Welcome to NFC Web Integration</h1>
+    <p>Scan an NFC card to see the data here:</p>
+    <div id="nfc-data">NFC data will appear here</div>
 
     <script>
-        document.getElementById('readCardButton').addEventListener('click', function() {
-            fetch('/read-card')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('cardData').innerText = JSON.stringify(data, null, 2);
-                })
-                .catch(error => console.error('Error:', error));
-        });
+        // JavaScript function to handle NFC data
+        function handleNfcData(data) {
+            const nfcDataDiv = document.getElementById('nfc-data');
+            nfcDataDiv.textContent = data;
+        }
     </script>
 </body>
+
 </html>
